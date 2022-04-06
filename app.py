@@ -38,5 +38,10 @@ def charts():
     dateOfMeasure = [year, month, day, 0, 0, 0]
     hours = list(range(0, 25))
     minutes = list(range(0, 1500, 10))
-    az, el, dops, sat_nr, el_sky, az_sky, sat_name = all_day_sat(float(fi), float(lam), float(h), dateOfMeasure, almanac, int(mask))
+    az, el, dops, sat_nr, el_sky, az_sky, sat_name = all_day_sat(
+        float(fi), float(lam), float(h), dateOfMeasure, almanac, int(mask))
     return render_template('charts.html', hours=hours, dops=dops, elev=el, minutes=minutes, sat_nr=sat_nr, az_sky=az_sky, el_sky=el_sky, sat_name=sat_name)
+
+
+if __name__ == '__main__':
+    app.run()
