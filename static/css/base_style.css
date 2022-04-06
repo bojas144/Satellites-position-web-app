@@ -1,0 +1,33 @@
+#sidebar {
+    width: 20%;
+    background-color: #212529;
+    color: white;
+    float: left;
+    height: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 1%;
+    padding-left: 1%;
+}
+
+#content {
+    background-color: white;
+    height: 100%;
+}
+
+.graphs {
+    float: left;
+    width: 40%;
+    height: 46%;
+    margin: 1%;
+}
+
+.charts {
+    margin-left: 10%;
+    text-align: center;
+}
+
+.footer {
+    position: absolute;
+    bottom: 20;
+}
