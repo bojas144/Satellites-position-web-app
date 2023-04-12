@@ -1,5 +1,5 @@
 # Satpos - Satellites' position web app
-#1. Cel projektu
+# 1. Cel projektu
 
 Celem projektu było stworzenie aplikacji pozwalającej na otrzymanie wykresów parametrów
 satelitów. Program miał działać na podstawie danych takich jak maska obserwacji, współrzędne
@@ -8,14 +8,14 @@ almanachu – pliku tekstowego z informacjami na temat satelitów ściągnięteg
 Obliczenia miały być przeprowadzone dla całej doby. Podstawowe funkcje np.: czytanie almanachu,
 zostały przekazane przez prowadzącego w języku python.
 
-#2. Efekt pracy
+# 2. Efekt pracy
 
 Efektem pracy jest aplikacja webowa „Satpos”. Obliczeniowa oraz serwerowa(back-end) część
 programu została przygotowana w języku python przy pomocy biblioteki Flask. Część wizualna
 strony(front-end) została stworzona w html, css i javascriptcie. Wykresy zostały stworzone przy
 pomocy biblioteki Plotly.
 
-#3. Opis aplikacji
+# 3. Opis aplikacji
 
 Głównym plikiem programu jest plik app.py – rdzeń serwera aplikacji webowej. Zdefiniowane
 w nim są dwa ‘routy’ – podstrony które występują na stronie. Do pliku importowane są funkcje
@@ -34,7 +34,7 @@ oddzielnych stronach. Funkcjonowanie stron wykresów zdefiniowano w pliku main.j
 Wygląd strony określono w pliku base_style.css w folderze ‘static/css’. Dodatkowo skorzystano
 z internetowej biblioteki Bootstrap.
 
-#4. Opis korzystania z aplikacji
+# 4. Opis korzystania z aplikacji
 
 Przez problemy z hostingiem, aplikację webową trzeba uruchomić na swoim własnym
 komputerze podręcznym. W tym celu należy zainstalować na komputerze pythona oraz środowisko
