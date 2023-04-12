@@ -38,9 +38,11 @@ def charts():
     dateOfMeasure = [year, month, day, 0, 0, 0]
     hours = list(range(0, 25))
     minutes = list(range(0, 1500, 10))
-    az, el, dops, sat_nr, el_sky, az_sky, sat_name = all_day_sat(
+    az, el, dops, sat_nr, el_sky, az_sky, sat_name_hour, lat, lon = all_day_sat(
         float(fi), float(lam), float(h), dateOfMeasure, almanac, int(mask))
-    return render_template('charts.html', hours=hours, dops=dops, elev=el, minutes=minutes, sat_nr=sat_nr, az_sky=az_sky, el_sky=el_sky, sat_name=sat_name)
+    el_length = len(el)
+    return render_template('charts.html', hours=hours, dops=dops, elev=el, minutes=minutes, sat_nr=sat_nr, az_sky=az_sky, el_sky=el_sky, sat_name_hour=sat_name_hour, 
+    el_length=el_length, lat=lat, lon=lon)
 
 
 if __name__ == '__main__':

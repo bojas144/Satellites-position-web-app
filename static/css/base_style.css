@@ -1,3 +1,7 @@
+body {
+    min-height: 100vh;
+}
+
 #sidebar {
     width: 20%;
     background-color: #212529;
@@ -10,24 +14,73 @@
     padding-left: 1%;
 }
 
-#content {
+#table {
     background-color: white;
     height: 100%;
 }
 
-.graphs {
-    float: left;
-    width: 40%;
-    height: 46%;
-    margin: 1%;
-}
-
-.charts {
-    margin-left: 10%;
+#content {
+    margin-top: 5%;
+    margin-bottom: 10%;
+    width: 80%;
+    box-shadow: 1px 1px 3px #808080; 
+    border-radius: 10px;
     text-align: center;
 }
 
+.charts {
+    margin-top: 2%;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-bottom: 2%;
+    width: 90%;
+    text-align: center;
+    height: 80%;
+}
+
 .footer {
-    position: absolute;
+    position: fixed;
     bottom: 20;
 }
+
+#sprawko {
+    width: 50%;
+    height: 70%;
+    margin-top: 10%;
+    text-align: center;
+}
+
+.pages .page {
+    display: none;
+}
+
+.pages .page.is-active {
+    display: block;
+}
+
+.tabs {
+    list-style-type: none;
+    margin-top: 50px;
+}
+
+.tabs .tab {
+    display: block;
+    width: 75%;
+    padding: 3px;
+}
+
+.tabs .tab a[data-switcher] {
+    display: block;
+    background-color: #111214;
+    text-align: center;
+    cursor: pointer;
+}
+
+.tabs .tab.is-active a[data-switcher] {
+    border: 5px white;
+}
+
+#sidebar a {
+    color: white;
+    text-decoration: none;
+  }

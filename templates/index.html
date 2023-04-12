@@ -1,88 +1,16 @@
-<html lang="pl">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mapa satelit</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.0/chart.min.js"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@200&display=swap');
-    </style>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/base_style.css') }}" type="text/css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-</head>
-<body>
-    <form action="/charts" method="POST">
-    <div id="sidebar">
-        <div class="mb-4">
-            <label for="maska">Maska obserwacji:</label>
-            <input type="number" name="mask" class="form-control w-50" id="maska" placeholder="[°]" value="{{ mask }}">
-        </div>
+{% extends "base.html" %}
 
-        <div class="mb-4">
-            <label for="data">Data pomiaru:</label>
-            <input type="date" name="data" class="form-control w-50" id="data" value="{{ date }}">
-        </div>
-        
-        <div class="mb-4">
-            <label for="stanowisko">Współrzędne stanowiska:</label>
-            <div class="input-group w-75">
-                <input type="number" step="0.00001" name="fi" class="form-control w-25" id="stanowisko" placeholder="φ [°]" value="{{ fi }}">
-                <input type="number" step="0.00001" name="lam" class="form-control w-25" id="stanowisko" placeholder="λ [°]" value="{{ lam }}">
-                <input type="number" step="0.001" name="h" class="form-control w-25" id="stanowisko" placeholder="h [m]" value="{{ h }}">
-            </div>
-        </div>
+{% block content %}
 
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="yes" id="checkbox" onchange="check(this)" name="checkbox">
-            <label class="form-check-label" for="checkbox">
-              Wczytaj najnowszy almanach
-            </label>
-        </div>
+<div style="padding: 3%;">
+<h1>Satpos - twój portal o satelitach</h1>
 
-        <div class="mb-4">
-            <label for="almanac">Wczytaj almanach z pliku:</label>
-            <input type="file" class="form-control w-75" id="almanac" name="almanac">
-        </div>
+<p>Satpos jest aplikacją webową, dzięki której możesz poznać aktualne informacje na temat satelitów. Po wprowadzeniu odpowiednich danych twoim oczom ukarzą się wykresy wizualizujące dane 
+takie jak parametry DOP satelitów czy przebieg orbity satlity nad kulą ziemską. Danymi wejściowymi programu są maska obserwacji, data pomiaru, współrzędne geodezyjne stanowiska pomiarowego 
+oraz almanach pobrany na dysk użytkownika. Możliwa jest również opcja automatycznego pobrania najnowszego almanachu ze strony <a href="https://celestrak.com/">celestrak.com</a> - w tym celu należy zaznaczyć ptaszek 
+przy polu "Wczytaj najnowszy almanach". Po przekazaniu poprawnych danych, program jest gotowy do rysowania wykresów. Wykresy rysowane są dla całej doby. Powstałe wykresy można zapisać na dysku użytkownika.</p>
+<p>Witryna powstała jako projekt przygotowany na przedmiot Systemy Nawigacji Satelitarnej na kierunku Geoinformatyka na Politechnice Warszawskiej. Do stworzenia strony wykorzystano język python(biblioteka Flask) 
+jako Back-end oraz html, css i javascript(biblioteka Plotly) jako Front-end.</p>
+</div>
 
-        <div class="mt-5">
-            <button type="submit" class="btn btn-dark w-50" style="background-color: #111214; color: white;">Rysuj</button>
-        </div>
-
-        {% if error_statement %}
-
-        <div class="alert alert-danger mt-5 text-center w-75" role="alert">
-            {{ error_statement }}
-        </div>
-
-        {% endif %}
-
-        <div class="footer">
-            &copy; Bojko Michał Marek (311508)
-        </div>
-
-        <script>
-            function check(checkbox) {
-                if(checkbox.checked == true) {
-                    document.getElementById('almanac').disabled = true;
-                }
-                else {
-                    document.getElementById('almanac').disabled = false;
-                }
-            }
-        </script>
-    </div>
-    </form>
-
-    <div id="content">
-        <div id="upper-charts" class="charts">
-            <div class="graphs border"></div>
-            <div class="graphs border"></div>
-        </div>
-        <div id="lower-charts" class="charts">
-            <div class="graphs border"></div>
-            <div class="graphs border"></div>
-        </div>
-    </div>
-</body>
-</html>
+{% endblock %}

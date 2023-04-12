@@ -114,6 +114,20 @@ def get_rneu(fi, lam):
     return Rneu
 
 
+def getLatLon(XYZ):
+    r_delta = np.linalg.norm(XYZ[0:1])
+    sinA = XYZ[1]/r_delta
+    cosA = XYZ[0]/r_delta
+
+    Lon = m.atan2(sinA,cosA)
+
+    if Lon < - m.pi:
+        Lon = Lon + 2 * m.pi
+    Lat = m.asin(XYZ[2]/np.linalg.norm(XYZ))
+
+    return m.degrees(Lat), m.degrees(Lon)
+
+
 def elevation(fi, lam, h, dateOfMeasure, almanac, mask):
     a = 6378137
     e2 = 0.00669438002290
@@ -134,12 +148,16 @@ def elevation(fi, lam, h, dateOfMeasure, almanac, mask):
 
     az_tab = []
     el_vec = []
+    lat, lon = [], []
     A = []
     sat_nr = 0
     el_sky, az_sky, sat_name = [], [], []
 
     for sat in almanac:
         Xs, id = satellite_xyz(dateOfMeasure, sat)
+        latlon = getLatLon(Xs)
+        lat.append(latlon[0])
+        lon.append(latlon[1])
         Xsr = Xs - Xr
         neu = np.dot(Rneu.T, Xsr)
         n, e, u = neu
@@ -160,7 +178,7 @@ def elevation(fi, lam, h, dateOfMeasure, almanac, mask):
 
     A = np.array(A)
 
-    return az_tab, el_vec, A, sat_nr, el_sky, az_sky, sat_name
+    return az_tab, el_vec, A, sat_nr, el_sky, az_sky, sat_name, lat, lon
 
 
 def sat_dop(Rneu, A):
@@ -215,7 +233,8 @@ def all_day_sat(fi, lam, h, dateOfMeasure, almanac, mask):
     lam = m.radians(lam)
     az_day = []
     el_day = []
-    sat_nr_day, sat_name_day = [], []
+    lat_day, lon_day = [], []
+    sat_nr_day, sat_name_hour = [], []
     el_sky, el_sky_hour = [], []
     az_sky, az_sky_hour = [], []
     gdops, pdops, tdops, hdops, vdops = [], [], [], [], []
@@ -223,24 +242,30 @@ def all_day_sat(fi, lam, h, dateOfMeasure, almanac, mask):
 
     for t in range(0, 1500, 10):
         actualdate = time(dateOfMeasure, t)
-        az, el, a, sat_nr, el_sky, az_sky, sat_name = elevation(fi, lam, h, actualdate, almanac, mask)
+        az, el, a, sat_nr, el_sky, az_sky, sat_name, lat, lon = elevation(fi, lam, h, actualdate, almanac, mask)
+        lat_day.append(lat)
+        lon_day.append(lon)
         az_day.append(az)
         el_day.append(el)
+        gdop, pdop, tdop, hdop, vdop = sat_dop(rneu, a)
+        gdops.append(gdop)
+        pdops.append(pdop)
+        tdops.append(tdop)
+        hdops.append(hdop)
+        vdops.append(vdop)
+        sat_nr_day.append(sat_nr)
         if actualdate[4] == 0:
             el_sky_hour.append(el_sky)
             az_sky_hour.append(az_sky)
-            sat_nr_day.append(sat_nr)
-            sat_name_day.append(sat_name)
-            gdop, pdop, tdop, hdop, vdop = sat_dop(rneu, a)
-            gdops.append(gdop)
-            pdops.append(pdop)
-            tdops.append(tdop)
-            hdops.append(hdop)
-            vdops.append(vdop)
+            sat_name_hour.append(sat_name)
 
     el_day = arr_to_list(el_day)
     az_day = arr_to_list(az_day)
+    lat_day = arr_to_list(lat_day)
+    lon_day = arr_to_list(lon_day)
 
     dops_day = [gdops, pdops, tdops, hdops, vdops]
 
-    return az_day, el_day, dops_day, sat_nr_day, el_sky_hour, az_sky_hour, sat_name_day
+    return az_day, el_day, dops_day, sat_nr_day, el_sky_hour, az_sky_hour, sat_name_hour, lat_day, lon_day
+
+
